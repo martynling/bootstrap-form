@@ -37,6 +37,14 @@ class BootstrapForm
      */
     protected $session;
 
+    /**
+     * Keeps a record of whether the form layout is horizontal so that config left_column and right_column
+     * are only used on horizontal forms
+     *
+     * @var bool
+     */
+    protected $horizontalLayout = false;
+
 
     /**
      * @param HtmlBuilder   $html
@@ -74,6 +82,10 @@ class BootstrapForm
             } elseif ($defaultForm === 'inline') {
                 $options['class'] = 'form-inline';
             }
+        }
+
+        if (isset($options['class'])){
+            $this->horizontalLayout = ($options['class'] == 'form-horizontal');
         }
 
         if (isset($options['model'])) {
@@ -476,7 +488,11 @@ class BootstrapForm
      */
     protected function getLeftColumnClass()
     {
-        return $this->config->get('bootstrap-form.left_column');
+        if ($this->horizontalLayout){
+            return $this->config->get('bootstrap-form.left_column');
+        } else {
+            return '';
+        }
     }
 
     /**
@@ -486,7 +502,11 @@ class BootstrapForm
      */
     protected function getRightColumnClass()
     {
-        return $this->config->get('bootstrap-form.right_column');
+        if ($this->horizontalLayout){
+            return $this->config->get('bootstrap-form.right_column');
+        } else {
+            return '';
+        }
     }
 
     /**
