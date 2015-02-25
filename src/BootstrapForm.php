@@ -384,7 +384,9 @@ class BootstrapForm
 
         $inputElement = $type == 'password' ? $this->form->password($name, $options) : $this->form->{$type}($name, $value, $options);
 
-        $groupElement = '<div '.$this->html->attributes($wrapperOptions).'>'.$inputElement.$this->getFieldError($name).'</div>';
+        $helpText = $this->getHelpText($options);
+
+        $groupElement = '<div '.$this->html->attributes($wrapperOptions).'>'.$inputElement.$helpText.$this->getFieldError($name).'</div>';
 
         return $this->getFormGroup($name, $label, $groupElement);
     }
@@ -552,5 +554,14 @@ class BootstrapForm
     protected function getFieldErrorClass($field, $class = 'has-error')
     {
         return $this->getFieldError($field) ? $class : null;
+    }
+
+    protected function getHelpText($options)
+    {
+        if (isset($options['helpText'])){
+            return '<span class="help-block">'. $options['helpText'] . '</span>';
+        } else {
+            return '';
+        }
     }
 }
