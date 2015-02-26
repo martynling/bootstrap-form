@@ -332,7 +332,10 @@ class BootstrapForm
 
             $elements .= $this->radio($name, $choiceLabel, $value, $checked, $inline, $options);
         }
-
+        $helpText = $this->getHelpText($options);
+        if ($helpText){
+            $elements .= $helpText;
+        }
         return $this->getFormGroup($name, $label, $elements);
     }
 
